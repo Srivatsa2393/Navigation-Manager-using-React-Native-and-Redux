@@ -61,7 +61,7 @@ const loginUserSuccess = (dispatch, user){
     payload: user
   });
 
-  Action.employeeList();
+  Action.main();
 };
 
 const loginUserFail = (dispatch){
