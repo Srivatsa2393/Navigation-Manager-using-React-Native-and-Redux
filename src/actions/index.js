@@ -3,6 +3,7 @@ import { PASSWORD_CHANGED } from './types';
 import { LOGIN_USER_SUCCESS } from './types';
 import { LOGIN_USER_FAIL } from './types';
 import { LOGIN_USER } from './types';
+import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 
 export const emailChanged = (text) => {
@@ -58,7 +59,9 @@ const loginUserSuccess = (dispatch, user){
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
-  })
+  });
+
+  Action.employeeList();
 };
 
 const loginUserFail = (dispatch){
