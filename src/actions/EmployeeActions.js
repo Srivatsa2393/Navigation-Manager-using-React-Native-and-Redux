@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import { EMPLOYEE_UPDATE } from './types';
 import { EMPLOYEE_CREATE } from './types';
+import { EMPLOYEES_FETCH_SUCCESS } from './types';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -25,5 +26,18 @@ export const employeeCreate = ({ name, phone, shift }) => {
         Actions.employeeList({ type: 'reset' })
       });
   };
+};
 
+export const employeesFetch = () => {
+
+  const { currentUser } = firebase.auth();
+  //Asyncronous action as we need to fetch data from firebase
+  //again use redux thunk and again use ref as above on how to store data
+  //snapshot is not the actual data it is the object that describes the actual data
+  return(dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/employees`)
+      .on('value', snapshot => {
+        dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() });
+      });
+  };
 };
