@@ -7,7 +7,7 @@ export default (state = '', action) => {
 
     case EMPLOYEES_FETCH_SUCCESS:
       //console.log(action);
-      return action.payload;
+      return action.payloads;
 
     default:
       return state;
