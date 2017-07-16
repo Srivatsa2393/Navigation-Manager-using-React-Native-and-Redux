@@ -2,6 +2,7 @@ import firebase from 'firebase';
 import { EMPLOYEE_UPDATE } from './types';
 import { EMPLOYEE_CREATE } from './types';
 import { EMPLOYEES_FETCH_SUCCESS } from './types';
+import { EMPLOYEE_SAVE_SUCCESS } from './types';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -47,9 +48,12 @@ export const employeeSave = ({ name, phone, shift, uid }) => {
   //saving an employee id is required we must specify the employee bu his id
   const { currentUser } = firebase.auth();
 
-  return () => {
+  return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/employees${uid}`)
       .set({ name, phone, shift })
-      .then(() => console.log('saved!'));
+      .then(() => {
+        dispatch({ type: EMPLOYEE_SAVE_SUCCESS });
+        Actions.employeeList({ type: 'reset' })
+      });
   };
 };
