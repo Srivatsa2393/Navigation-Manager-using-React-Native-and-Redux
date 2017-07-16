@@ -41,3 +41,15 @@ export const employeesFetch = () => {
       });
   };
 };
+
+
+export const employeeSave = ({ name, phone, shift, uid }) => {
+  //saving an employee id is required we must specify the employee bu his id
+  const { currentUser } = firebase.auth();
+
+  return () => {
+    firebase.database().ref(`/users/${currentUser.uid}/employees${uid}`)
+      .set({ name, phone, shift })
+      .then(() => console.log('saved!'));
+  };
+};
